@@ -1,0 +1,46 @@
+/*le istruzioni di questo file si possono trovare spiegate al seguente indirizzo
+ * https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
+ */
+group 'com.arij'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+//dal nome sembrano plugin oer l'IDE, togliendoli il sistema pare reggere
+//apply plugin: 'eclipse'
+//apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    //repository usata nel buildscript (probabilmente potrebbe essere ridondante)
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+        //testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+}
+
+//repository generale
+repositories {
+    mavenCentral()
+}
+
+//per la creazione del jar eseguibile
+bootJar {
+    baseName = 'gs-spring-boot'
+    version =  '0.1.0'
+}
+
+dependencies {
+    //inserire qui le dipendenze
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //per embeddare il tomcat con spring boot a runtime (commentato in attesa di capire se ci serve in questo modulo)
+    //providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    testCompile("junit:junit")
+}
