@@ -19,10 +19,9 @@ buildscript {
         spring_boot_version = '1.5.4.RELEASE'
     }
 
-    //repository usata nel buildscript (probabilmente potrebbe essere ridondante)
+    //repositories usate nel buildscript (probabilmente potrebbe essere ridondante)
     repositories {
         jcenter()
-        mavenCentral()
     }
 
     dependencies {
