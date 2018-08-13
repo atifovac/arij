@@ -32,8 +32,8 @@ class TicketServiceImpl : TicketService {
         return ticketRepo.save(ticket).id
     }
 
-    override fun newTicket(issueCode: Int, storyPoints: Int, vararg label: String): Int {
-        val labels = labelRepo.findAll(label.asIterable()).toHashSet()
+    override fun newTicket(issueCode: Int, storyPoints: Int, label: Array<String>?): Int {
+        val labels = labelRepo.findAll(label?.asIterable()).toHashSet()
         val issue = issueRepo.findOne(issueCode)
 
         return ticketRepo.save(Ticket(0, issue, storyPoints, labels)).id

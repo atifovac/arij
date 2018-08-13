@@ -9,7 +9,7 @@ interface TicketService {
 
     fun newTicket(issue: Issue, storyPoints: Int, labels: Set<Label>) : Int
 
-    fun newTicket(issueCode: Int, storyPoints: Int, vararg label: String) : Int
+    fun newTicket(issueCode: Int, storyPoints: Int = 0, label: Array<String>?) : Int
 
     fun newTicket(ticket: Ticket) : Int
 

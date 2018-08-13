@@ -22,7 +22,7 @@ class IssueServiceImpl : IssueService {
 
 
     override fun newIssue(issueCode: Int, message: String): Int {
-        return issueRepo.save(Issue(issueCode, message)).code
+        return issueRepo.save(Issue(code = issueCode, message = message)).code
     }
 
     override fun newIssue(issue: Issue): Int {

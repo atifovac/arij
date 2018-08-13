@@ -6,6 +6,7 @@ version '1.0-SNAPSHOT'
 
 apply plugin: "org.jetbrains.kotlin.jvm" // Required for Kotlin integration
 apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+apply plugin: "kotlin-jpa"
 apply plugin: 'org.springframework.boot'
 apply plugin: 'org.junit.platform.gradle.plugin'
 
@@ -31,9 +32,11 @@ buildscript {
         // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
         // https://mvnrepository.com/artifact/commons-io/commons-io
         //testCompile group: 'junit', name: 'junit', version: '4.12'
     }
+
 }
 
 //per la creazione del jar eseguibile
