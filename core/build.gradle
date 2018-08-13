@@ -1,12 +1,13 @@
 /*le istruzioni di questo file si possono trovare spiegate al seguente indirizzo
  * https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html/
  */
-group 'com.arij'
+group 'com.arij.core'
 version '1.0-SNAPSHOT'
 
 apply plugin: "org.jetbrains.kotlin.jvm" // Required for Kotlin integration
 apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -28,13 +29,15 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
+        // https://mvnrepository.com/artifact/commons-io/commons-io
         //testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 }
 
 //per la creazione del jar eseguibile
 jar {
-    baseName = 'gs-spring-boot'
+    baseName = 'arij-core'
     version =  '0.1.0'
 }
 
@@ -45,5 +48,12 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile group: 'commons-io', name: 'commons-io', version: '2.6'
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    //test (JUnit 5)
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.2.0")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.2.0")
+    //test (Junit 4)
+    testRuntime("org.junit.vintage:junit-vintage-engine:4.12.2")
 }

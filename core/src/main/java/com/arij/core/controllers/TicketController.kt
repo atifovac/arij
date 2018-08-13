@@ -7,8 +7,10 @@ import com.arij.core.services.TicketService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
-@RestController("/ticket")
-abstract class TicketController @Autowired constructor(private val service: TicketService){
+@RestController
+@CrossOrigin
+@RequestMapping("ticket")
+class TicketController @Autowired constructor(private val service: TicketService){
 
 
     @GetMapping("/")
@@ -16,12 +18,17 @@ abstract class TicketController @Autowired constructor(private val service: Tick
         return service.getTicketList()
     }
 
+    //@PostMapping("/new")
+    //fun newTicket(issue: Issue, storyPoints: Int, labels: List<Label>) : Int {
+    //    return service.newTicket(issue, storyPoints, labels)
+    //}
+
     @PostMapping("/new")
-    fun newTicket(issue: Issue, storyPoints: Int, labels: List<Label>) : Int {
-        return service.newTicket(issue, storyPoints, labels)
+    fun newTicket(@RequestBody(required = true) ticket: Ticket) : Int {
+        return service.newTicket(ticket)
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/{id}")
     fun deleteTicket(@RequestParam(value = "id") id: Int) : String {
         return service.deleteTicket(id)
     }

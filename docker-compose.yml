@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+
+  arij-core:
+    build: ./core
+    ports:
+      - 12121:8181
+
