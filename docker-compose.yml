@@ -2,8 +2,19 @@ version: '3'
 
 services:
 
+  arij-core-db:
+    image: postgres:9.4
+    volumes:
+      - arij-volumes:/var/lib/docker/postgres
+    ports:
+      - 5002:5432
+
   arij-core:
     build: ./core
     ports:
       - 12121:8181
+    depends_on:
+      - arij-core-db
 
+  volumes:
+    - arij-volumes:

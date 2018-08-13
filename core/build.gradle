@@ -27,7 +27,8 @@ buildscript {
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
-        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
+        // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
         classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.2'
         // https://mvnrepository.com/artifact/commons-io/commons-io
@@ -38,7 +39,7 @@ buildscript {
 //per la creazione del jar eseguibile
 jar {
     baseName = 'arij-core'
-    version =  '0.1.0'
+    version = '0.1.0'
 }
 
 repositories {
@@ -48,6 +49,10 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
     compile 'org.springframework.boot:spring-boot-starter-web'
+    compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1200-jdbc41', {
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 

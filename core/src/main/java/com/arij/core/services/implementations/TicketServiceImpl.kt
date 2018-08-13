@@ -3,10 +3,7 @@ package com.arij.core.services.implementations
 import com.arij.core.entities.Issue
 import com.arij.core.entities.Label
 import com.arij.core.entities.Ticket
-import com.arij.core.repositories.IssueRepo
-import com.arij.core.repositories.LabelRepo
 import com.arij.core.repositories.TicketRepo
-import com.arij.core.services.LabelService
 import com.arij.core.services.TicketService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -14,35 +11,31 @@ import org.springframework.stereotype.Service
 @Service
 class TicketServiceImpl : TicketService {
 
-    val ticketRepo: TicketRepo = TicketRepo(mutableListOf())
-    val labelRepo: LabelRepo = LabelRepo(mutableListOf())
-    val issueRepo: IssueRepo = IssueRepo(mutableListOf())
-
     @Autowired
-    lateinit var labelService: LabelService
+    lateinit var ticketRepo: TicketRepo
 
     override fun getTicketList(): List<Ticket> {
-        return ticketRepo.tickets
+        return ticketRepo.findAll().toList()
     }
 
-    override fun newTicket(issue: Issue, storyPoints: Int, labels: List<Label>) : Int {
-        val id = ticketRepo.tickets
+    override fun newTicket(issue: Issue, storyPoints: Int, labels: Set<Label>): Int {
+        val id = ticketRepo.findAll()
                 .map { ticket -> ticket.id }
                 .max()?.plus(1) ?: 0
 
-        ticketRepo.tickets.add(Ticket(id, issue, storyPoints, labels))
+        ticketRepo.save(Ticket(id, issue, storyPoints, labels))
 
         return id
     }
 
     override fun newTicket(ticket: Ticket): Int {
-        val id = ticketRepo.tickets
+        val id = ticketRepo.findAll()
                 .map { storedTicket -> storedTicket.id }
                 .max()?.plus(1) ?: 0
 
         ticket.id = id
 
-        ticketRepo.tickets.add(ticket)
+        ticketRepo.save(ticket)
 
         return id
     }
@@ -52,13 +45,11 @@ class TicketServiceImpl : TicketService {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun deleteTicket(id: Int) : String {
-        val selectedTicket = ticketRepo.tickets.filter { ticket -> ticket.id == id }.getOrNull(0)
+    override fun deleteTicket(id: Int): String {
+        val selectedTicket = ticketRepo.findOne(id)
 
         return if (selectedTicket != null) {
-            ticketRepo.tickets.removeAt(
-                    ticketRepo.tickets.indexOf(selectedTicket)
-            )
+            ticketRepo.delete(id)
             "Deleted"
         } else {
             "Not found"

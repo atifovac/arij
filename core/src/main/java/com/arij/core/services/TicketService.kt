@@ -7,7 +7,7 @@ import com.arij.core.entities.Ticket
 interface TicketService {
     fun getTicketList(): List<Ticket>
 
-    fun newTicket(issue: Issue, storyPoints: Int, labels: List<Label>) : Int
+    fun newTicket(issue: Issue, storyPoints: Int, labels: Set<Label>) : Int
 
     fun newTicket(issueCode: Int, storyPoints: Int, vararg label: String) : Int
 

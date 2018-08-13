@@ -1,3 +1,10 @@
 package com.arij.core.entities
 
-data class Label (val name: String)
+import javax.persistence.*
+
+@Entity
+@Table(name = "Label")
+data class Label(
+        @Id
+        val name: String
+)

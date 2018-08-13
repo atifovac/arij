@@ -1,3 +1,11 @@
 package com.arij.core.entities
 
-data class Issue (val code: Int, val message: String)
+import javax.persistence.*
+
+@Entity
+@Table(name = "Issue")
+data class Issue(
+        @Id val code: Int,
+
+        val message: String
+)

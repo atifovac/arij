@@ -1,6 +1,6 @@
 package com.arij.core.repositories
 
 import com.arij.core.entities.Label
+import org.springframework.data.repository.CrudRepository
 
-@Deprecated("Use it until a database is available")
-data class LabelRepo(val labels: MutableList<Label>)
+interface LabelRepo : CrudRepository<Label, String>
