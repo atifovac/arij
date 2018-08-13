@@ -13,5 +13,5 @@ interface TicketService {
 
     fun newTicket(ticket: Ticket) : Int
 
-    fun deleteTicket(id: Int) : String
+    fun deleteTicket(id: Int) : Boolean
 }

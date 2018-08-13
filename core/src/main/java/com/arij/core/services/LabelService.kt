@@ -8,9 +8,8 @@ interface LabelService {
     fun getLabels(): List<Label>
     fun getLabelByName(name :String): Label?
 
-    fun addLabel(label: Label)
-    fun addLabel(message: String)
+    fun addLabel(label: Label) : String
+    fun addLabel(message: String) : String
 
-    fun deleteLabel(label: Label): Boolean
     fun deleteLabel(name: String): Boolean
 }

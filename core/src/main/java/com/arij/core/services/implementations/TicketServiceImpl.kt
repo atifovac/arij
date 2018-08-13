@@ -3,6 +3,8 @@ package com.arij.core.services.implementations
 import com.arij.core.entities.Issue
 import com.arij.core.entities.Label
 import com.arij.core.entities.Ticket
+import com.arij.core.repositories.IssueRepo
+import com.arij.core.repositories.LabelRepo
 import com.arij.core.repositories.TicketRepo
 import com.arij.core.services.TicketService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,46 +15,33 @@ class TicketServiceImpl : TicketService {
 
     @Autowired
     lateinit var ticketRepo: TicketRepo
+    @Autowired
+    lateinit var issueRepo: IssueRepo
+    @Autowired
+    lateinit var labelRepo: LabelRepo
 
     override fun getTicketList(): List<Ticket> {
         return ticketRepo.findAll().toList()
     }
 
     override fun newTicket(issue: Issue, storyPoints: Int, labels: Set<Label>): Int {
-        val id = ticketRepo.findAll()
-                .map { ticket -> ticket.id }
-                .max()?.plus(1) ?: 0
-
-        ticketRepo.save(Ticket(id, issue, storyPoints, labels))
-
-        return id
+        return ticketRepo.save(Ticket(0, issue, storyPoints, labels)).id
     }
 
     override fun newTicket(ticket: Ticket): Int {
-        val id = ticketRepo.findAll()
-                .map { storedTicket -> storedTicket.id }
-                .max()?.plus(1) ?: 0
-
-        ticket.id = id
-
-        ticketRepo.save(ticket)
-
-        return id
+        return ticketRepo.save(ticket).id
     }
 
     override fun newTicket(issueCode: Int, storyPoints: Int, vararg label: String): Int {
-        //label = labelService.getLabelByName(label[0]);
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val labels = labelRepo.findAll(label.asIterable()).toHashSet()
+        val issue = issueRepo.findOne(issueCode)
+
+        return ticketRepo.save(Ticket(0, issue, storyPoints, labels)).id
     }
 
-    override fun deleteTicket(id: Int): String {
-        val selectedTicket = ticketRepo.findOne(id)
+    override fun deleteTicket(id: Int): Boolean {
+        ticketRepo.delete(id)
 
-        return if (selectedTicket != null) {
-            ticketRepo.delete(id)
-            "Deleted"
-        } else {
-            "Not found"
-        }
+        return ticketRepo.exists(id)
     }
 }

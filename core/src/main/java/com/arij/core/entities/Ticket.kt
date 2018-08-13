@@ -5,7 +5,9 @@ import javax.persistence.*
 @Entity
 @Table(name = "Ticket")
 data class Ticket(
-        @Id var id: Int = 0,
+        @Id
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        var id: Int,
 
         @OneToOne(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
         @JoinColumn(name = "code")
